@@ -63,21 +63,20 @@ class ComponentListDirective(SphinxDirective):
             f"{github_url}/{component.relative_to(root)}" for component in components
         ]
 
-        # build the list of all the components
-        items = []
-        for component, url, doc in zip(components, urls, docs):
-            items.append(
-                nodes.list_item(
+        items = [
+            nodes.list_item(
+                "",
+                nodes.paragraph(
                     "",
-                    nodes.paragraph(
-                        "",
-                        "",
-                        nodes.reference("", component.stem, internal=False, refuri=url),
-                        nodes.Text(f": {doc}"),
+                    "",
+                    nodes.reference(
+                        "", component.stem, internal=False, refuri=url
                     ),
-                )
+                    nodes.Text(f": {doc}"),
+                ),
             )
-
+            for component, url, doc in zip(components, urls, docs)
+        ]
         return [nodes.bullet_list("", *items)]
 
 
