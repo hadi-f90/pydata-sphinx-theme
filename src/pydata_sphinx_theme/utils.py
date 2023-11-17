@@ -55,6 +55,5 @@ SPHINX_LOGGER = logging.getLogger(__name__)
 def maybe_warn(app: Sphinx, msg, *args, **kwargs):
     """Wraps the Sphinx logger to allow warning suppression."""
     theme_options = get_theme_options_dict(app)
-    should_warn = theme_options.get("surface_warnings", False)
-    if should_warn:
+    if should_warn := theme_options.get("surface_warnings", False):
         SPHINX_LOGGER.warning(msg, *args, **kwargs)
